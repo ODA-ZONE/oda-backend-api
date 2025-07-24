@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'authenication',
+    'vendors',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +127,33 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# REST Framework Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+}
+
+# Email Configuration (for OTP)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console for development
+
+# SMS Configuration (you'll need to integrate with a service like Twilio)
+# SMS_BACKEND = 'your_sms_backend'
+
+# OTP Configuration
+OTP_EXPIRY_MINUTES = 5
+OTP_LENGTH = 6
+
+# File Upload Configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# Custom User Model
+AUTH_USER_MODEL = 'authenication.CustomUser'
