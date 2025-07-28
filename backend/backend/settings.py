@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -132,12 +130,14 @@ REST_FRAMEWORK = {
 }
 
 # Email Configuration (for OTP)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console for development
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console for development
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Uncomment for production
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT ='547'
-EMAIL_USE_TLS = 'True'
+EMAIL_PORT = 587  # Correct port for Gmail with TLS
+EMAIL_USE_TLS = True  # Boolean value, not string
 EMAIL_HOST_USER = 'testorder1245@gmail.com'
-EMAIL_HOST_PASSWORD = '1234567890@test'
+EMAIL_HOST_PASSWORD = '1234567890@test'  # Use App Password for Gmail in production
+DEFAULT_FROM_EMAIL = 'testorder1245@gmail.com'  # Added missing setting
 
 
 # SMS Configuration (you'll need to integrate with a service like Twilio)

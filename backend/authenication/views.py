@@ -46,7 +46,7 @@ def register_user(request):
             send_mail(
                 'ODA - Email Verification',
                 f'Your email verification code is: {email_otp.otp_code}',
-                settings.DEFAULT_FROM_EMAIL if hasattr(settings, 'DEFAULT_FROM_EMAIL') else 'noreply@oda.com',
+                settings.DEFAULT_FROM_EMAIL,  # Use the setting we just added
                 [user.email],
                 fail_silently=False,
             )
@@ -152,7 +152,7 @@ def resend_otp(request):
                 send_mail(
                     'ODA - Email Verification',
                     f'Your email verification code is: {otp.otp_code}',
-                    settings.DEFAULT_FROM_EMAIL if hasattr(settings, 'DEFAULT_FROM_EMAIL') else 'noreply@oda.com',
+                    settings.DEFAULT_FROM_EMAIL,  # Use the setting we just added
                     [contact],
                     fail_silently=False,
                 )
