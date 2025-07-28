@@ -133,6 +133,12 @@ REST_FRAMEWORK = {
 
 # Email Configuration (for OTP)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console for development
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT ='547'
+EMAIL_USE_TLS = 'True'
+EMAIL_HOST_USER = 'testorder1245@gmail.com'
+EMAIL_HOST_PASSWORD = '1234567890@test'
+
 
 # SMS Configuration (you'll need to integrate with a service like Twilio)
 # SMS_BACKEND = 'your_sms_backend'
