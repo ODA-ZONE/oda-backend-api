@@ -281,6 +281,7 @@ curl -X POST http://localhost:8000/api/auth/register/ \
   -H "Content-Type: application/json" \
   -d '{
     "username": "john_doe",
+    "full_name": "Jane Smith",
     "email": "john@example.com", 
     "phone": "+1234567890",
     "password": "SecurePassword123!",

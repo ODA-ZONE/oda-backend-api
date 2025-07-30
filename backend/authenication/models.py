@@ -12,6 +12,7 @@ class UserRole(models.TextChoices):
     ADMIN = 'admin', 'Admin'
 
 class CustomUser(AbstractUser):
+    full_name = models.CharField(max_length=255, blank=True, null=True)  # Added full_name field
     phone = models.CharField(max_length=15, unique=True)
     role = models.CharField(max_length=10, choices=UserRole.choices)
     is_phone_verified = models.BooleanField(default=False)
@@ -20,6 +21,20 @@ class CustomUser(AbstractUser):
     location_lng = models.DecimalField(max_digits=11, decimal_places=8, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        # Auto-populate first_name and last_name from full_name if provided
+        if self.full_name and not self.first_name and not self.last_name:
+            name_parts = self.full_name.strip().split()
+            if len(name_parts) >= 1:
+                self.first_name = name_parts[0]
+            if len(name_parts) >= 2:
+                self.last_name = ' '.join(name_parts[1:])
+        # Auto-populate full_name from first_name and last_name if not provided
+        elif not self.full_name and (self.first_name or self.last_name):
+            self.full_name = f"{self.first_name or ''} {self.last_name or ''}".strip()
+        
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.username} - {self.email}"
@@ -47,4 +62,4 @@ class OTPVerification(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"OTP for {self.user.username} - {self.otp_type}" 
+        return f"OTP for {self.user.username} - {self.otp_type}"
